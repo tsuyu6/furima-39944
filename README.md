@@ -1,24 +1,47 @@
-# README
+## users テーブル
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| family_name        | string | DEFAULT|
+| first_name         | string | DEFAULT|
+| ruby               | string | DEFAULT|
+| nickname           | string | null: false |
+| email              | string |null: false unique|
+| encrypted_password | string | null: false |
+| birthday           | date   | null: false |
 
-Things you may want to cover:
 
-* Ruby version
+## items テーブル
 
-* System dependencies
+| Column | Type   | Options     |
+| ------ | ------ | ----------- |
+| seller| string | null: false |
+| category |references|null: false,foreign_key|
+| condition | string |null: false,foreign_key|
+| shipping_charge | text | null: false |　
+| prefecture | text | null: false |都道府県
+| shipping_date | text | null: false |
 
-* Configuration
 
-* Database creation
+## records テーブル
 
-* Database initialization
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| users | references| null: false,foreign_key: true    |
+| items  | references | null: false,foreign_key: true    　　　           |
+| items_name | string | null: false          　　　      |
+| value | integer | null: false                   　　　 |
+| category | string | null: false                  　  |
+| buyer | string | null: false                   　　　 |
 
-* How to run the test suite
+## shipping_informations テーブル
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| buyer | string    | null: false,        |
+| payment_method | string     | null: false                |
+| post_code | string | null: false               |
+| prefectures | string | null: false               |
+| city | string | null: false               |
+| block_number | string | null: false               |
+| telephone_number| string | null: false               |
