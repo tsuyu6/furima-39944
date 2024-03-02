@@ -29,6 +29,7 @@
 | item_name | string | null: false |
 | value | integer | null: false |
 | information | text | null: false |
+| delivaly_day_id | integer | null: false |　
 
 ### Association
 
