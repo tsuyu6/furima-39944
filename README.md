@@ -27,7 +27,7 @@
 | shipping_charge_id | integer | null: false |　
 | prefecture_id | integer | null: false |都道府県
 | item_name | string | null: false |
-| value | integer | null: false |
+| price | integer | null: false |
 | information | text | null: false |
 | delivaly_day_id | integer | null: false |　
 
