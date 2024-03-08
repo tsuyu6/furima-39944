@@ -13,9 +13,9 @@ RSpec.describe User, type: :model do
     end
     context '新規登録できない場合' do
       it "nameが空では登録できない" do
-        @user.name = ''
+        @user.nickname = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("Name can't be blank")
+        expect(@user.errors.full_messages).to include("Nickname can't be blank")
       end
       it 'passwordが5文字以下では登録できない' do
         @user.password = '12345'
@@ -50,6 +50,61 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Email is invalid')
       end
+
+        it '半角英語のみでは登録できない' do
+          @user.password = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+        
+        it '半角数字のみでは登録できない' do
+          @user.password = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      
+      it '全角英語を利用できない' do
+          @user.password = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+      
+      it '全角数字を利用できない' do
+          @user.password = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+
+        it '氏名の苗字入力が必須である' do
+          @user.family_name = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Family name can't be blank")
+      end    
+      
+      it '氏名の名前入力が必須である' do
+          @user.first_name = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("First name can't be blank")
+      end
+
+      it '苗字のカナ入力が必須である' do
+          @user.first_name_kana = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("First name kana can't be blank")
+      end         
+
+      it '名前のカナ入力が必須である' do
+          @user.family_name_kana = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Family name kana can't be blank")  
+      end
+
+      it '生年月日の入力が必須である' do
+          @user.birthday = ''
+          @user.valid?
+          expect(@user.errors.full_messages).to include("Birthday can't be blank")  
+      end
     end
   end
-end
+end 
+
