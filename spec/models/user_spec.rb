@@ -105,15 +105,15 @@ RSpec.describe User, type: :model do
       end
 
       it '苗字のカナ入力が必須である' do
-          @user.first_name_kana = ''
+          @user.family_name_kana = ''
           @user.valid?
-          expect(@user.errors.full_messages).to include("First name kana can't be blank")
+          expect(@user.errors.full_messages).to include("Family name kana can't be blank")
       end         
 
       it '名前のカナ入力が必須である' do
-          @user.family_name_kana = ''
+          @user.first_name_kana = ''
           @user.valid?
-          expect(@user.errors.full_messages).to include("Family name kana can't be blank")  
+          expect(@user.errors.full_messages).to include("First name kana can't be blank")  
       end
 
       it '氏名の苗字に英字が含まれると登録できない' do
@@ -123,15 +123,15 @@ RSpec.describe User, type: :model do
       end    
       
       it '氏名の名前に英字が含まれると登録できない' do
-      @user.family_name = 'abvdef'
+      @user.first_name = 'abvdef'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Family name 全角文字を使用してください")
+      expect(@user.errors.full_messages).to include("First name 全角文字を使用してください")
     end  
       
       it '氏名の名前に英字が含まれると登録できない' do
-      @user.family_name = 'abvdef'
+      @user.first_name = 'abvdef'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Family name 全角文字を使用してください")
+      expect(@user.errors.full_messages).to include("First name 全角文字を使用してください")
     end      
       
       it '苗字のカナに英字が含まれると登録できない' do
@@ -141,9 +141,9 @@ RSpec.describe User, type: :model do
     end   
 
       it '名前のカナに英字が含まれると登録できない' do
-      @user.family_name = 'abvdef'
+      @user.first_name = 'abvdef'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Family name 全角文字を使用してください")
+      expect(@user.errors.full_messages).to include("First name 全角文字を使用してください")
     end  
       
       it '生年月日の入力が必須である' do
