@@ -1,0 +1,13 @@
+class Delivaly_day< ActiveHash::Base
+  validates :delivaly_day, presence: true    
+  self.data = [
+      { id: 1, day: '---' },
+      { id: 2, day: '1〜2日で発送' },
+      { id: 3, day: '2~3日で発送' },
+      { id: 4, day: '4~7日で発送' }, 
+    ]
+    # include ActiveHash::Associations
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :articles
+
+end
