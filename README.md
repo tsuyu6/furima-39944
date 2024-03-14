@@ -29,7 +29,7 @@
 | item_name | string | null: false |
 | price | integer | null: false |
 | information | text | null: false |
-| delivaly_day_id | integer | null: false |　
+| delively_day_id | integer | null: false |　
 
 ### Association
 
