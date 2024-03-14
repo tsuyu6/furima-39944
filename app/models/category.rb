@@ -1,5 +1,5 @@
 class Category < ActiveHash::Base
-  validates :category, presence: true
+  
   self.data = [
     { id: 0, name: '---' },
     { id: 1, name: 'レディース' },
@@ -15,6 +15,6 @@ class Category < ActiveHash::Base
   ]
   ; include ActiveHash::Associations
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :articles
+  has_many :items
 
 end
