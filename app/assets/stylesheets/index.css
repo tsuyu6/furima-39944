@@ -1,0 +1,38 @@
+h1{
+  text-align: center;
+}
+
+.post{
+  display: block;
+  width: 150px;
+  padding: 10px;
+  border: 1px solid white;
+  background-color: orange;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.article{
+  height:200px;
+  background-color:lightgray;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #fff;
+  padding: 20px;
+}
+
+.article-genre{
+  font-size: 16px;
+  border: 1px solid;
+  padding: 5px;
+  background-color: lightblue;
+}
+
+.article-title{
+  font-size: 20px;
+  font-weight: bold;
+}
