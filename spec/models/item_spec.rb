@@ -1,118 +1,107 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
+
   before do
-    @user = FactoryBot.build(:user)
+    @item = FactoryBot.build(:item)
   end
+      # 正常系
 
-  describe 'ユーザー新規登録' do
-    context '新規登録できる場合' do
-      it "nameとemail、passwordとpassword_confirmationが存在すれば登録できる" do
-        expect(@user).to be_valid
-      end
-    end
-    context '新規登録できない場合' do
-      it "nameが空では登録できない" do
-        @user.nickname = ''
-        @user.valid?
-        expect(@user.errors.full_messages).to include("Nickname can't be blank")
-      end
-      it 'passwordが5文字以下では登録できない' do
-        @user.password = '12345'
-        @user.password_confirmation = '12345'
-        @user.valid?
-        expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+      describe '商品出品機能のテスト' do
+        context '正常系' do
+      it "全ての項目が入力されていれば出品できる" do
+        expect(@item).to be_valid
       end
     end
 
-# 正常系
-# ・全ての項目が入力されていれば出品できる
+      # 異常系
+      # ■商品画像
+      # ・商品画像が空では出品出来ない（@item.imageには空文字ではなくnilを代入する）
+      context '異常系' do
+      it "画像が空では出品出来ない" do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Image can't be blank")
+      end
 
-# 異常系
-# ■商品画像
-# ・商品画像が空では出品出来ない（@item.imageには空文字ではなくnilを代入する）
-it "画像が空では出品出来ない" do
-  @item.image = ""
-  @item.valid?
-  expect(@item.errors.full_messages).to include("image can't be blank")
+      # ■商品名
+      # ・商品名が空では出品できない
+      it "商品名が空では出品できない" do 
+        @item.item_name = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item name can't be blank")
+      end
 
-# ■商品名
-# ・商品名が空では出品できない
-it "商品名が空では出品できない" do
-  @item.item_name = ""
-  @item.valid?
-  expect(@item.errors.full_messages).to include("item_name can't be blank")
+      # ■商品説明
+      # ・商品説明が空では出品できない
+      it "商品説明が空では出品出来ない" do
+        @item.information = ""
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Information can't be blank")
+      end
+
+      # ■ActiveHash５項目
+      it "カテゴリーに「---」が選択されている場合は出品できない" do
+        @item.category_id = 0 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category must be other than 0")
+      end
+
+      it "商品の状態に「---」が選択されている場合は出品できない" do
+        @item.condition_id = 0 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Condition must be other than 0")
+      end
+
+      it "配送料の負担に「---」が選択されている場合は出品できない" do
+        @item.shipping_charge_id = 0 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping charge must be other than 0")
+      end
+
+      it "発送元の地域に「---」が選択されている場合は出品できない" do
+        @item.prefecture_id = 0 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture must be other than 0")
+      end
+
+      it "発送までの日数に「---」が選択されている場合は出品できない" do
+        @item.delively_day_id = 0 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Delively day must be other than 0")
+      end
+
+      # ■価格 
+      it "価格が空では出品できない" do
+        @item.price = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price can't be blank")
+      end
+
+      it "価格に半角数字以外が含まれている場合は出品できない（※半角数字以外が一文字でも含まれていれば良い）" do
+        @item.price = 'ABCDE１２３４５'  
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid")
+      end
+
+      it "価格が300円未満では出品できない" do
+        @item.price = 299 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid")
+      end
+
+      it "価格が9_999_999円を超えると出品できない" do
+        @item.price = 10_000_000 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is invalid")
+      end
+
+      # ■出品者情報
+      it "userが紐付いていなければ出品できない" do
+        @item.user = nil 
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
+      end
+    end
+  end
 end
-
-# ■商品説明
-# ・商品説明が空では出品できない
-it "商品説明が空では出品出来ない" do
-  @item.information = ""
-  @item.valid?
-  expect(@item.errors.full_messages).to include("information can't be blank")
-end
-
-# ■ActiveHash５項目
-# ・カテゴリーに「---」が選択されている場合は出品できない
-@item.category _id= ‘0’ do
-  @item.valid?
-  expect(@item.errors.full_messages).to include("category can't be blank")
-end
-
-  # ・商品の状態に「---」が選択されている場合は出品できない
-@item.condition _id= ‘0’ do
-  @item.valid?
-  expect(@item.errors.full_messages).to include("conditin can't be blank")
-end
-
-  # ・配送料の負担に「---」が選択されている場合は出品できない
-  @item.shipping_charge _id= ‘0’ do
-  @item.valid?
-  expect(@item.errors.full_messages).to include("shipping_charge can't be blank")
-end
-
-# ・発送元の地域に「---」が選択されている場合は出品できない
-@item.prefecture _id= ‘0’ do
-@item.valid?
-expect(@item.errors.full_messages).to include("prefecture can't be blank")
-end
-
-# ・発送までの日数に「---」が選択されている場合は出品できない
-@item.delively_day _id= ‘0’ do
-@item.valid?
-expect(@item.errors.full_messages).to include("delively_day can't be blank")
-end
-
-# ■価格 
-# ・価格が空では出品できない
-@item.price _id= ‘0’ do
-@item.valid?
-expect(@item.errors.full_messages).to include("price can't be blank")
-end
-
-# ・価格に半角数字以外が含まれている場合は出品できない（※半角数字以外が一文字でも含まれていれば良い）
-@item.price = 'ABCDE１２３４５' do
-@item.valid?
-expect(@item.errors.full_messages).to include("price には半角数字のみを設定してください")
-end
-
-# ・価格が300円未満では出品できない
-@item.price = '1〜299' do
-@item.valid?
-expect(@item.errors.full_messages).to include("price には300円以上を設定してください")
-end
-
-# ・価格が9_999_999円を超えると出品できない
-@item.price = '9_999_999〜' do
-@item.valid?
-expect(@item.errors.full_messages).to include("price には999万円以下を設定してください")
-end
-
-# ■出品者情報
-# ・userが紐付いていなければ出品できない
-@item.user = 'user' do
-@item.valid?
-expect(@item.errors.full_messages).to include("user には同じ名前を設定してください")
-end
-
-# 上のやつを参考に▫️を作る

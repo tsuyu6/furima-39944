@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
-  validates :category_id,:condition_id,:delively_day_id,:shipping_charge_id, numericality: { other_than: 0 }
-  validates :prefecture_id, numericality: { other_than: 1 }
+  validates :category_id,:condition_id,:delively_day_id,:shipping_charge_id,:prefecture_id, numericality: { other_than: 0 }
+
   extend ActiveHash::Associations::ActiveRecordExtensions
   has_one_attached :image
   
