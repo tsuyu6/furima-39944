@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  validates :category_id,:condition_id,:delively_day_id,:shipping_charge_id,:prefecture_id, numericality: { other_than: 0 }
+  validates :category_id,:condition_id,:delively_day_id,:shipping_charge_id,:prefecture_id,numericality: { other_than: 0 }
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   has_one_attached :image
@@ -16,7 +16,7 @@ class Item < ApplicationRecord
 
   belongs_to :shipping_charge
 
-  
+
   belongs_to :prefecture
   
   
