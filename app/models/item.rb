@@ -14,7 +14,9 @@ class Item < ApplicationRecord
   belongs_to :delively_day
   
 
+  belongs_to :shipping_charge
 
+  
   belongs_to :prefecture
   
   
