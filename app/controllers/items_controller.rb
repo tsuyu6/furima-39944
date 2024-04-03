@@ -22,11 +22,13 @@ class ItemsController < ApplicationController
       if user_signed_in? && current_user.id == @item.user_id
       @item.destroy
       redirect_to root_path
+      else
+      redirect_to root_path
   end
 end
 
   def show   
-  end
+end
 
   def edit
     unless current_user.id == @item.user_id 
@@ -53,5 +55,5 @@ end
   
   def set_item
     @item = Item.find(params[:id])
+    end
   end
-end
