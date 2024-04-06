@@ -14,7 +14,7 @@
 ### Association
 
 - has_many :items
-- has_many :records
+- has_many :orders
 
 
 ## items テーブル
@@ -34,10 +34,10 @@
 ### Association
 
 - belongs_to :user
-- has_one:record
+- has_one:order
 
 
-## records テーブル
+## orders テーブル
 
 | Column | Type       | Options                        |
 | ------ | ---------- | ------------------------------ |
@@ -52,7 +52,7 @@
 
 | Column | Type       | Options                        |
 | ------ | ---------- | ------------------------------ |
-| record |references | null: false,foreign_key: true         |購入記録テーブルの外部キー
+| order |references | null: false,foreign_key: true         |購入記録テーブルの外部キー
 | post_code | string | null: false               |郵便番号
 ｜prefecture_id | integer | null: false |都道府県
 | city | string | null: false               |市区町村
@@ -62,4 +62,4 @@
 
 ### Association
 
-- belongs_to : record
+- belongs_to : order
