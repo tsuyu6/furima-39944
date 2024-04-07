@@ -23,7 +23,7 @@ class Item < ApplicationRecord
   # 300以上、9,999,999以下の整数を許可する
 validates :price, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is invalid"}
   #空欄
-  
+has_one :order
 belongs_to :user
 #空欄
 
