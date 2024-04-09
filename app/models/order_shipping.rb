@@ -8,7 +8,6 @@ class OrderShipping
     validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)" }
     validates :city 
     validates :block_number
-    validates :building_name 
     validates :telephone_number
     end
   
