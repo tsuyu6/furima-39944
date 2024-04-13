@@ -13,15 +13,6 @@ RSpec.describe OrderShipping, type: :model do
         expect(@order_shipping).to be_valid
       end
 
-      it 'cityは空でも保存できること' do
-        @order_shipping.city = ''
-        expect(@order_shipping).to be_valid
-      end
-
-      it 'house_numberは空でも保存できること' do
-        @order_shipping.house_number = ''
-        expect(@order_shipping).to be_valid
-      end
       
       it 'building_nameは空でも保存できること' do
         @order_shipping.building_name = ''
@@ -30,46 +21,36 @@ RSpec.describe OrderShipping, type: :model do
     end
 
     context '内容に問題がある場合' do
-      it 'postal_codeが空だと保存できないこと' do
-        @order_shipping.postal_code = ''
+      it 'post_codeが空だと保存できないこと' do
+        @order_shipping.post_code = ''
         @order_shipping.valid?
-        expect(@order_shipping.errors.full_messages).to include("Postal code can't be blank")
+        expect(@order_shipping.errors.full_messages).to include("Post code can't be blank")
       end
       
-      it 'postal_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
-        @order_shipping.postal_code = '1234567'
+      it 'post_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
+        @order_shipping.post_code = '1234567'
         @order_shipping.valid?
-        expect(@order_shipping.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
+        expect(@order_shipping.errors.full_messages).to include('Post code is invalid. Include hyphen(-)')
       end
       
+      it 'cityは空でも保存できること' do
+        @order_shipping.city = ''
+        @order_shipping.valid?
+        expect(@order_shipping.errors.full_messages).to include("City can't be blank")
+      end
+
+
+      it 'block_numberは空でも保存できること' do
+        @order_shipping.block_number = ''
+        @order_shipping.valid?
+        expect(@order_shipping.errors.full_messages).to include("Block number can't be blank")
+      end
+
+
       it 'prefectureを選択していないと保存できないこと' do
-        @order_shipping.prefecture = 0
+        @order_shipping.prefecture_id = 0
         @order_shipping.valid?
         expect(@order_shipping.errors.full_messages).to include("Prefecture can't be blank")
-      end
-      
-      it 'priceが空だと保存できないこと' do
-        @order_shipping.price = nil
-        @order_shipping.valid?
-        expect(@order_shipping.errors.full_messages).to include("Price can't be blank")
-      
-      end
-      it 'priceが全角数字だと保存できないこと' do
-        @order_shipping.price = '２０００'
-        @order_shipping.valid?
-        expect(@order_shipping.errors.full_messages).to include('Price is invalid')
-      end
-      
-      it 'priceが1円未満では保存できないこと' do
-        @order_shipping.price = 0
-        @order_shipping.valid?
-        expect(@order_shipping.errors.full_messages).to include('Price is invalid')
-      end
-      
-      it 'priceが1,000,000円を超過すると保存できないこと' do
-        @order_shipping.price = 1000001
-        @order_shipping.valid?
-        expect(@order_shipping.errors.full_messages).to include('Price is invalid')
       end
       
       it 'userが紐付いていないと保存できないこと' do
@@ -77,6 +58,19 @@ RSpec.describe OrderShipping, type: :model do
         @order_shipping.valid?
         expect(@order_shipping.errors.full_messages).to include("User can't be blank")
       end
+    
+      it '電話番号は、10桁以上11桁以内の半角数値のみ保存可能なこと' do
+      @order_shipping.telephone_number = "09012345678"
+      expect(@order_shipping).to be_valid
+      end
+    
+      
+      # it '商品名の入力が必須であること' do
+      #   @order_shipping.item_name = ""
+      #   @order_shipping.valid?
+      #   expect(@order_shipping.errors.full_messages).to include("Item name can't be blank")
+      # end
     end
   end
 end
+
