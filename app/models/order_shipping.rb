@@ -1,9 +1,10 @@
 class OrderShipping
   include ActiveModel::Model
-  attr_accessor :item_id,:user_id, :post_code , :prefecture_id,:building_name, :city, :block_number,:telephone_number
+  attr_accessor :item_id,:user_id, :post_code , :prefecture_id,:building_name, :city, :block_number,:telephone_number,:token
 
   with_options presence: true do
    
+    validates :token
     validates :user_id 
     validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)" }
     validates :city 
