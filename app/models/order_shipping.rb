@@ -2,14 +2,15 @@ class OrderShipping
   include ActiveModel::Model
   attr_accessor :item_id,:user_id, :post_code , :prefecture_id,:building_name, :city, :block_number,:telephone_number,:token
 
-  with_options presence: true do
+  with_options presence: true  do
    
     validates :token
     validates :user_id 
     validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)" }
     validates :city 
     validates :block_number
-    validates :telephone_number
+    validates :telephone_number, format: { with: /\A\d{10,11}\z/, message: "TelePhoneNumber must be 10or11 digit Half-width numbers" }
+    validates :item_id
     end
   
   validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}

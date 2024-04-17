@@ -25,7 +25,8 @@
     </div> 
 
  <%# <%= if 'ユーザーがログインしている ' %>
-<% if user_signed_in? %>
+<% if user_signed_in? && @item.order == nil %>
+<%#'商品が売れていなければ'%>
 
  <%# <% if '商品詳細画面にアクセスしたユーザーが出品者である' %> 
     <% if current_user.id == @item.user_id %>

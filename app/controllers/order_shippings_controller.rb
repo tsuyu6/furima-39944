@@ -1,7 +1,8 @@
 class OrderShippingsController < ApplicationController
-  before_action :authenticate_user!,only: [:index, :create, ]
+  before_action :authenticate_user!,only: [:index, :create]
+  before_action :set_item, only:[:index ,:create]
   def index 
-    gon.public_key = ENV["pk_test_223e01405558236168987833"]
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @item = Item.find(params[:item_id])
     if current_user.id == @item.user_id || @item.order.present?
       redirect_to root_path
@@ -17,14 +18,12 @@ class OrderShippingsController < ApplicationController
       @order_shipping.save
       redirect_to root_path
     else
-      gon.public_key = ENV["pk_test_223e01405558236168987833"]
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       render :index, status: :unprocessable_entity
     end 
   end 
 
-  def show
-    @item = Item.find(params[:item_id])
-  end
+  
 
     private
 
@@ -33,11 +32,15 @@ class OrderShippingsController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_c4e942e83e2afeabd2052d18"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+    Payjp.api_key = "PAYJP_SECRET_KEY"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
     Payjp::Charge.create(
       amount:@item.price,  # 商品の値段
       card: order_shipping_params[:token],    # カードトークン
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
+  end
+
+  def set_item
+    @item=Item.find(params[:item_id])
     end
   end
