@@ -1,10 +1,9 @@
 class OrderShippingsController < ApplicationController
   before_action :authenticate_user!,only: [:index, :create]
   before_action :set_item, only:[:index ,:create]
-  def set_item
-   end
- 
- 
+end
+
+
   def index 
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     if current_user.id == @item.user_id || @item.order.present?
@@ -28,7 +27,10 @@ class OrderShippingsController < ApplicationController
   
 
     private
+    def set_item
     @item = Item.find(params[:item_id])
+  end
+
 
   def order_shipping_params
     params.require(:order_shipping).permit(:post_code, :prefecture_id, :city, :block_number, :building_name, :telephone_number).merge(user_id: current_user.id,item_id:@item.id,token: params[:token])
