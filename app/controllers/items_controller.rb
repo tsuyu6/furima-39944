@@ -24,15 +24,15 @@ class ItemsController < ApplicationController
       redirect_to root_path
       else
       redirect_to root_path
+      end
   end
-end
 
   def show   
-end
+  end
 
   def edit
-    unless current_user.id == @item.user_id 
-      redirect_to action: :index
+    if current_user.id && @item.user_id || @item.order.present?
+      redirect_to root_path
     end
   end
 
@@ -55,5 +55,6 @@ end
   
   def set_item
     @item = Item.find(params[:id])
-    end
   end
+
+end
