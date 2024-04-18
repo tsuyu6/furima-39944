@@ -95,6 +95,12 @@ RSpec.describe OrderShipping, type: :model do
         @order_shipping.valid?
         expect(@order_shipping.errors.full_messages).to include("Token can't be blank")
       end
+
+      it "userに紐づいていなければ登録できない" do
+        @order_shipping.user_id = nil
+        @order_shipping.valid?
+        expect(@order_shipping.errors.full_messages).to include("User can't be blank")
+        end
+      end
     end
   end
-end

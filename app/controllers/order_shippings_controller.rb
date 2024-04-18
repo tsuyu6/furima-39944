@@ -1,6 +1,11 @@
 class OrderShippingsController < ApplicationController
   before_action :authenticate_user!,only: [:index, :create]
   before_action :set_item, only:[:index ,:create]
+  def set_item
+    @item = Item.find(params[:item_id])
+   end
+ 
+ 
   def index 
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @item = Item.find(params[:item_id])
@@ -40,6 +45,4 @@ class OrderShippingsController < ApplicationController
     )
   end
 
-  def set_item
-    end
-  end
+ 
