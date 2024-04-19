@@ -38,11 +38,13 @@
   　＃販売利益
     const addprofitDom = document.getElementById("profit");
     const addprofit = Math.floor(inputValue * 0.9)
-    addprofitDom.innerHTML = addprofit %> %>
+    addprofitDom.innerHTML = addprofit %> 
 
 
 
     <%# /支払額の表示 %>
+<%= include_gon %>
+
 <%= form_with url: item_order_shippings_path(@item.id), model: @order_shipping,id: 'charge-form', class: 'transaction-form-wrap' ,local: true do |f| %>
     <%= render 'shared/error_messages', model: f.object %>
     <%# カード情報の入力 %>
@@ -80,6 +82,7 @@
         <div id="cvc-form" class="input-default"></div>
       </div>
     </div>
+
     <%# /カード情報の入力 %>
     
     <%# 配送先の入力 %>

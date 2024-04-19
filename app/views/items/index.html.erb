@@ -134,13 +134,14 @@
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" %>
 
-          <%# 商品が売れていればsold outを表示しましょう %>
+          
+        <%# #131行目のブロック変数|item|から紐づいている %>
          <% if item.order.present? %>
          <div class='sold-out'>
          <span>Sold Out!!</span>
-         </div>
+         </div> 
         <% end %>
-          <%# //商品が売れていればsold outを表示しましょう %>
+       
 
         </div>
         <div class='item-info'>
