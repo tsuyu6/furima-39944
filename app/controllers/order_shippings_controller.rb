@@ -45,4 +45,4 @@ class OrderShippingsController < ApplicationController
     )
   end
 end
- 
+it 'block_numberは空でも保存できること' do

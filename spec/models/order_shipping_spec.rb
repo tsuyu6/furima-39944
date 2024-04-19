@@ -33,19 +33,14 @@ RSpec.describe OrderShipping, type: :model do
         end
         
         it 'post_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
-          @order_shipping.post_code = '1234567'
+          @order_shipping.post_code = '123-4567'
           @order_shipping.valid?
           expect(@order_shipping.errors.full_messages).to include('Post code is invalid. Include hyphen(-)')
         end
         
-        it 'cityは空でも保存できること' do
-          @order_shipping.city = ''
-          @order_shipping.valid?
-          expect(@order_shipping.errors.full_messages).to include("City can't be blank")
-        end
 
 
-        it 'block_numberは空でも保存できること' do
+        it 'block_numberは空でも保存できない' do
           @order_shipping.block_number = ''
           @order_shipping.valid?
           expect(@order_shipping.errors.full_messages).to include("Block number can't be blank")
@@ -58,6 +53,13 @@ RSpec.describe OrderShipping, type: :model do
           expect(@order_shipping.errors.full_messages).to include("Prefecture can't be blank")
         end
         
+        it 'cityは空でも保存できない' do
+          @order_shipping.city = ''
+          @order_shipping.valid?
+          expect(@order_shipping.errors.full_messages).to include("City can't be blank")
+        end
+
+
         it 'userが紐付いていないと保存できないこと' do
           @order_shipping.user_id = nil
           @order_shipping.valid?
