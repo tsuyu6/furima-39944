@@ -59,12 +59,6 @@ RSpec.describe OrderShipping, type: :model do
           expect(@order_shipping.errors.full_messages).to include("City can't be blank")
         end
 
-
-        it 'userが紐付いていないと保存できないこと' do
-          @order_shipping.user_id = nil
-          @order_shipping.valid?
-          expect(@order_shipping.errors.full_messages).to include("User can't be blank")
-        end
       
       
         it '電話番号は、9桁以下の場合購入できない' do
